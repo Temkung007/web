@@ -1,0 +1,36 @@
+<!-- Navigation -->
+<%- include('layout/navbar'); %>
+    <!-- Page Header -->
+    <%- include('layout/header'); %>
+
+        <div class="container mt-3 mb-3">
+            <div class="text-center">
+                <h1>Login</h1>
+            </div>
+            <% if(messages.error) { %>
+                <div class="alert alert-danger" role="alert">
+                    <%= messages.error %>
+                </div>
+                <% } %>
+                    <% if(messages.success) { %>
+                        <div class="alert alert-success" role="alert">
+                            <%= messages.success %>
+                        </div>
+                        <% } %>
+                            <form action="/login" method="POST">
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Email address</label>
+                                    <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                                    <input type="password" class="form-control" name="password" id="exampleInputPassword1">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Login</button>
+                            </form>
+
+        </div>
+
+
+        <!-- Footer -->
+        <%- include('layout/footer'); %>

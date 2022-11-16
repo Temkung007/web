@@ -1,0 +1,44 @@
+<!-- Navigation -->
+<%- include('layout/navbar'); %>
+    <!-- Page Header-->
+    <%- include('layout/header'); %>
+        <div class="container">
+            <div class="text-center">
+                <img src="/img/My Halal Space logo.png" style="padding-top: 0;padding-bottom: 0;" width="300px" height="300px" alt="" srcset="">
+            </div>
+            <p>Nowadays, it is still quite hard for Muslim tourists to find proper Halal foods, therefore we created myhalalspace.com to provide and guide Muslim tourists with deeper knowledge about halal food, methods to find proper halal food stores, and
+                suggest halal food stores that we have personally visited in Phuket, Thailand.</p>
+
+
+        </div>
+        <!-- Main Content-->
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <!-- Post preview-->
+                    <% for(let i=0;i<post.length;i++) { %>
+                        <div class="post-preview">
+                            <a href="/contents/<%= post[i].title %> ">
+                                <h2 class="post-title">
+                                    <%= post[i].title %>
+                                </h2>
+                                <h3 class="post-subtitle">
+                                    <%= post[i].description %>
+                                </h3>
+                            </a>
+                            <p class="post-meta">
+                                Posted by myhalalspace on
+                                <% var strdate = new Date(post[i].create_at);
+                                var date = strdate.getDate() + "/" + (strdate.getMonth() + 1) + "/" + strdate.getFullYear(); %>
+                                    <%= date %>
+                            </p>
+                        </div>
+                        <% } %>
+                            <hr class="my-4" />
+                            <!-- Pager-->
+                            <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="/post/1">Older Posts →</a></div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <%- include('layout/footer'); %>

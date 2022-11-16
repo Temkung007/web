@@ -1,0 +1,126 @@
+<%- include('../layout/navbar'); %>
+    <%- include('../layout/header'); %>
+        <link rel="stylesheet" href="/assets/extensions/quill/quill.snow.css">
+        <link rel="stylesheet" href="/assets/extensions/quill/quill.bubble.css">
+
+
+        <!-- Post Content -->
+        <div class="container mt-3">
+            <div class="text-center">
+                <h1>Post</h1>
+                <input type="text" id="text" value="<%= delta %>" hidden>
+            </div>
+            <div>
+                <% if(messages.error) { %>
+                    <div class="alert alert-danger" role="alert">
+                        <%= messages.error %>
+                    </div>
+                    <% } %>
+                        <% if(messages.success) { %>
+                            <div class="alert alert-success" role="alert">
+                                <%= messages.success %>
+                            </div>
+                            <% } %>
+                                <form>
+                                    <div class="form-group mt-3 mb-3">
+                                        <label for="exampleInputEmail1">Title</label>
+                                        <input type="text" class="form-control" id="title" aria-describedby="emailHelp" name="title" value="<%= title %>" placeholder="title">
+                                    </div>
+                                    <div class="form-group mt-3 mb-3">
+                                        <label for="exampleInputEmail1">Category</label>
+                                        <input type="text" class="form-control" id="category" aria-describedby="emailHelp" name="category" value="<%= category %>" placeholder="category">
+                                    </div>
+                                    <div class="form-group mt-3 mb-3">
+                                        <label for="exampleInputEmail1">Description</label>
+                                        <input type="text" class="form-control" id="description" aria-describedby="emailHelp" name="description" value="<%= description %>" placeholder="description">
+                                    </div>
+                                    <div class="form-group mt-3 mb-3">
+                                        <div id="full">
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-5">
+                                        <button type="button" onclick="update()" class="btn btn-primary">UPDATE</button>
+                                    </div>
+                                </form>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <%- include('../layout/footer'); %>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <script src="/assets/extensions/quill/quill.min.js"></script>
+
+            <script>
+                var gg = new Quill("#full", {
+                    bounds: "#full-container .editor",
+                    modules: {
+                        toolbar: [
+                            [{
+                                font: []
+                            }, {
+                                size: []
+                            }],
+                            ["bold", "italic", "underline", "strike"],
+                            [{
+                                color: []
+                            }, {
+                                background: []
+                            }],
+                            [{
+                                script: "super"
+                            }, {
+                                script: "sub"
+                            }],
+                            [{
+                                list: "ordered"
+                            }, {
+                                list: "bullet"
+                            }, {
+                                indent: "-1"
+                            }, {
+                                indent: "+1"
+                            }],
+                            ["direction", {
+                                align: []
+                            }],
+                            ["link", "image", "video"],
+                            ["clean"]
+                        ]
+                    },
+                    theme: "snow"
+                });
+                let data = document.getElementById("text").value;
+                gg.setContents(JSON.parse(data));
+
+                const update = () => {
+
+                    let title = document.getElementById("title").value;
+                    let description = document.getElementById("description").value;
+                    let category = document.getElementById("category").value;
+                    if (title != null && description != null && category != null) {
+                        var delta = gg.getContents();
+                        let data = JSON.stringify(delta);
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/update-post",
+                            data: {
+                                "data": data,
+                                "title": title,
+                                "description": description,
+                                "category": category
+                            },
+                            dataType: "",
+                            success: window.location.href = "/post-manage/1",
+                        });
+                    }
+
+                }
+            </script>
+
+
+            </body>
+
+            </html>

@@ -1,0 +1,98 @@
+<%- include('../layout/navbar'); %>
+
+    <!-- Page Header -->
+    <%- include('../layout/header'); %>
+        <!-- Main Content-->
+        <div class="container">
+            <div class="text-center">
+                <h1>Manage Post</h1>
+            </div>
+            <div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">title</th>
+                            <th scope="col">category</th>
+                            <th scope="col">description</th>
+                            <th scope="col" class="text-center" style="margin-left:auto; width: 500px;">action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for(let i=0;i<post.length;i++) { %>
+                            <tr>
+                                <th scope="row">
+                                    <%= i+1 %>
+                                </th>
+                                <td>
+                                    <%= post[i].title %>
+                                </td>
+                                <td>
+                                    <%= post[i].category %>
+                                </td>
+                                <td>
+                                    <%= post[i].description %>
+                                </td>
+                                <td class="text-center">
+                                    <button type="button" value="<%= post[i].title %>" class="btn btn-primary me-3" onclick="go_edit(this.value);">Edit</button>
+                                    <button type="button" value="<%= post[i].id %>" class="btn btn-danger me-3" onclick="delete_post(this.value);">Delete</button>
+                                    <button type="button" value="<%= post[i].title %>" class="btn btn-success" onclick="copy(this.value);">Link</button>
+                                </td>
+                            </tr>
+                            <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <main class="mb-4">
+            <div class="container px-4 px-lg-5">
+                <% if(numberOfPages > 1) { %>
+                    <div style="text-align: center;display: inline-block;">
+                        <ul class="pagination pagination-circle" style="margin-left: auto; margin-right: auto;">
+                            <% if(page > 1) { %>
+                                <li class="page-item">
+                                    <a class="page-link" href="<%= page - 1 %>">Previous</a>
+                                </li>
+                                <% } %>
+                                    <% for(let i = iterator; i <= numberOfPages; i++) { %>
+                                        <% if(i === page) { %>
+                                            <li class="page-item active" aria-current="page">
+                                                <a class="page-link" href="<%= i %>">
+                                                    <%= i %><span class="visually-hidden">(current)</span></a>
+                                            </li>
+                                            <% continue; %>
+                                                <% } %>
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="<%= i %>">
+                                                            <%= i %>
+                                                        </a>
+                                                    </li>
+                                                    <% } %>
+                                                        <% if(page < numberOfPages) { %>
+                                                            <li class="page-item">
+                                                                <a class="page-link" href="<%= page + 1 %>">Next</a>
+                                                            </li>
+                                                            <% } %>
+                        </ul>
+                    </div>
+                    <% } %>
+            </div>
+        </main>
+        <script>
+            const delete_post = (e) => {
+                let text = "Press a button!\nEither OK or Cancel.";
+                if (confirm(text) == true) {
+                    window.location.href = "/delete/post/" + e;
+                }
+            }
+
+            const copy = (e) => {
+                navigator.clipboard.writeText("www." + window.location.host + "/contents/" + e);
+            }
+
+            const go_edit = (e) => {
+                window.location.href = "/post-edit/" + e;
+            }
+        </script>
+        <!-- Footer -->
+        <%- include('../layout/footer'); %>

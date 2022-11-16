@@ -1,0 +1,66 @@
+<!-- Navigation -->
+<%- include('layout/navbar'); %>
+    <!-- Page Header-->
+    <%- include('layout/header'); %>
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <!-- Post preview-->
+                    <% for(let i=0;i<post.length;i++) { %>
+                        <div class="post-preview">
+                            <a href="/contents/<%= post[i].title %> ">
+                                <h2 class="post-title">
+                                    <%= post[i].title %>
+                                </h2>
+                                <h3 class="post-subtitle">
+                                    <%= post[i].description %>
+                                </h3>
+                            </a>
+                            <p class="post-meta">
+                                Posted by myhalalspace on
+                                <% var strdate = new Date(post[i].create_at);
+                        var date = strdate.getDate() + "/" + (strdate.getMonth() + 1) + "/" + strdate.getFullYear(); %>
+                                    <%= date %>
+                            </p>
+                        </div>
+                        <% } %>
+                            <hr class="my-4" />
+                            <main class="mb-4">
+                                <div class="container px-4 px-lg-5">
+                                    <% if(numberOfPages > 1) { %>
+                                        <div style="text-align: center;display: inline-block;">
+                                            <ul class="pagination pagination-circle" style="margin-left: auto; margin-right: auto;">
+                                                <% if(page > 1) { %>
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="<%= page - 1 %>">Previous</a>
+                                                    </li>
+                                                    <% } %>
+                                                        <% for(let i = iterator; i <= numberOfPages; i++) { %>
+                                                            <% if(i === page) { %>
+                                                                <li class="page-item active" aria-current="page">
+                                                                    <a class="page-link" href="<%= i %>">
+                                                                        <%= i %><span class="visually-hidden">(current)</span></a>
+                                                                </li>
+                                                                <% continue; %>
+                                                                    <% } %>
+                                                                        <li class="page-item">
+                                                                            <a class="page-link" href="<%= i %>">
+                                                                                <%= i %>
+                                                                            </a>
+                                                                        </li>
+                                                                        <% } %>
+                                                                            <% if(page < numberOfPages) { %>
+                                                                                <li class="page-item">
+                                                                                    <a class="page-link" href="<%= page + 1 %>">Next</a>
+                                                                                </li>
+                                                                                <% } %>
+                                            </ul>
+                                        </div>
+                                        <% } %>
+                                </div>
+                            </main>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <%- include('layout/footer'); %>

@@ -1,0 +1,41 @@
+<div id="carouselExampleIndicators" class="carousel slide mb-3" style="background: no-repeat center center;background-color: #6c757d;background-size: cover;" data-bs-ride="carousel">
+    <div class="carousel-inner" id="img">
+
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $.ajax({
+        url: "/get-img-header",
+        type: 'GET',
+        success: function(res) {
+            let img = [];
+            res.forEach(item => {
+                img.push(item.url);
+            });
+            var html = "";
+            html += `            
+                <div class="carousel-item active">
+                <img src="/${img[img.length - 1]}" class="d-block w-100" style="height: 500px;" alt="...">
+                </div>
+                `;
+            img.pop();
+            img.forEach(item => {
+                html += `            
+                <div class="carousel-item">
+                <img src="/${item}" class="d-block w-100" style="height: 500px;" alt="...">
+                </div>
+                `;
+            });
+            document.getElementById("img").innerHTML = html;
+        }
+    });
+</script>
